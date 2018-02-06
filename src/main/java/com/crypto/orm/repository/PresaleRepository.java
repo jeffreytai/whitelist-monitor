@@ -1,6 +1,6 @@
 package com.crypto.orm.repository;
 
-import com.crypto.orm.entity.WhitelistCoin;
+import com.crypto.orm.entity.PresaleCoin;
 import com.utils.DbUtils;
 
 import java.util.Date;
@@ -8,16 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WhitelistRepository {
+public class PresaleRepository {
 
     /**
-     * Return all whitelist entries in the table
+     * Return all presale entries in the table
      * @return
      */
-    public static List<WhitelistCoin> findAll() {
-        String query = "SELECT w FROM WhitelistCoin w";
+    public static List<PresaleCoin> findAll() {
+        String query = "SELECT p FROM PresaleCoin p";
 
-        List<WhitelistCoin> entries = (List<WhitelistCoin>) DbUtils.runMultipleResultQuery(query);
+        List<PresaleCoin> entries = (List<PresaleCoin>) DbUtils.runMultipleResultQuery(query);
         return entries;
     }
 
@@ -27,7 +27,7 @@ public class WhitelistRepository {
      * @return number of rows deleted
      */
     public static Integer deleteIfLessThanDate(Date date) {
-        String query = "DELETE FROM WhitelistCoin w WHERE w.created < :date";
+        String query = "DELETE FROM PresaleCoin p WHERE p.created < :date";
         Map<Object, Object> bindedParameters = new HashMap<>();
         bindedParameters.put("date", date);
 
