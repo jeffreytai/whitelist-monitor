@@ -54,7 +54,7 @@ public class WhitelistReaderImpl implements PageReader {
 
                 entries.add(entry);
 
-                logger.debug("Created entity for {}", entry.getName());
+                logger.debug("Created whitelist entity for {}", entry.getName());
             }
         }
         catch (IOException ex) {
@@ -66,7 +66,7 @@ public class WhitelistReaderImpl implements PageReader {
 
     @Override
     public boolean processEntries(List<? extends Object> firstBatch, List<? extends Object> secondBatch) {
-        logger.info("Processing entries");
+        logger.info("Processing whitelist entries");
 
         List<WhitelistCoin> previousBatch = (List<WhitelistCoin>) firstBatch;
         List<WhitelistCoin> currentBatch = (List<WhitelistCoin>) secondBatch;
@@ -98,6 +98,7 @@ public class WhitelistReaderImpl implements PageReader {
         if (hasChanges) {
             sendAlerts(newProjects, updatedProjects);
         }
+
         return hasChanges;
     }
 
@@ -106,14 +107,19 @@ public class WhitelistReaderImpl implements PageReader {
         DbUtils.saveEntities(entries);
     }
 
+    /**
+     * Sends alerts to Slack regarding new and updated projects
+     * @param newProjects
+     * @param updatedProjects
+     */
     private void sendAlerts(List<WhitelistCoin> newProjects, List<Pair<WhitelistCoin, WhitelistCoin>> updatedProjects) {
         SlackWebhook slack = new SlackWebhook("whitelist-update-alert");
 
         if (newProjects.size() > 0) {
-            logger.debug("Sending slack alerts for new projects");
+            logger.debug("Sending slack alerts for new whitelist projects");
 
             StringBuilder sb = new StringBuilder();
-            sb.append("New projects:\n");
+            sb.append("New whitelist projects:\n");
 
             for (WhitelistCoin newProject : newProjects) {
                 String message = String.format("<%s|%s> (category: %s) added with a status of %s\n",
@@ -129,10 +135,10 @@ public class WhitelistReaderImpl implements PageReader {
         }
 
         if (updatedProjects.size() > 0) {
-            logger.debug("Sending slack alerts for updated projects");
+            logger.debug("Sending slack alerts for updated whitelist projects");
 
             StringBuilder sb = new StringBuilder();
-            sb.append("Updated projects:\n");
+            sb.append("Updated whitelist projects:\n");
 
             for (Pair<WhitelistCoin, WhitelistCoin> updatedProject : updatedProjects) {
                 WhitelistCoin prev = updatedProject.getValue0();
