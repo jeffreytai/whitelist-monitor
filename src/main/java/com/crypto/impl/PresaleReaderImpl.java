@@ -149,39 +149,39 @@ public class PresaleReaderImpl implements PageReader {
                         curr.getUrl(),
                         curr.getName()));
 
+                List<String> appendedDetails = new ArrayList<>();
+
                 if (!prev.getPresaleInterest().equals(curr.getPresaleInterest())) {
-                    message.append(String.format(
-                            "; interest went from %s to %s",
+                    appendedDetails.add(String.format(
+                            "interest went from %s to %s",
                             prev.getPresaleInterest(),
-                            curr.getPresaleInterest()
-                    ));
+                            curr.getPresaleInterest()));
                 }
 
                 if (!prev.getPresaleDate().equals(curr.getPresaleDate())) {
-                    message.append(String.format(
-                            "; date went from %s to %s",
+                    appendedDetails.add(String.format(
+                            "status went from %s to %s",
                             prev.getPresaleDate(),
-                            curr.getPresaleDate()
-                    ));
+                            curr.getPresaleDate()));
                 }
 
                 if (!prev.getBonus().equals(curr.getBonus())) {
-                    message.append(String.format(
-                            "; bonus went from %s to %s",
+                    appendedDetails.add(String.format(
+                            "bonus went from %s to %s",
                             prev.getBonus(),
-                            curr.getBonus()
-                    ));
+                            curr.getBonus()));
                 }
 
                 if (!prev.getMinRate().equals(curr.getMinRate())) {
-                    message.append(String.format(
-                            "; rate went from %s to %s",
+                    appendedDetails.add(String.format(
+                            "rate went from %s to %s",
                             prev.getMinRate(),
-                            curr.getMinRate()
-                    ));
+                            curr.getMinRate()));
                 }
 
-                message.append("\n");
+                String details = String.join("; ", appendedDetails);
+
+                message.append(details).append("\n");
                 sb.append(message.toString());
             }
 

@@ -2,7 +2,6 @@ package com.crypto.orm.entity;
 
 import com.google.gson.annotations.SerializedName;
 import org.jsoup.nodes.Element;
-import sun.jvm.hotspot.memory.Generation;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
