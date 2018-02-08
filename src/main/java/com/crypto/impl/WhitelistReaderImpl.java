@@ -151,7 +151,7 @@ public class WhitelistReaderImpl implements PageReader {
                         prev.getStatus(),
                         curr.getStatus());
 
-                sb.append(message);
+                sb.append(message).append("\n");
             }
 
             slack.sendMessage(sb.toString());
